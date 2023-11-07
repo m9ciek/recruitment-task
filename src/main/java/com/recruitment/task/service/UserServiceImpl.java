@@ -19,12 +19,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public UserDTO getUserByName(String name) {
-        if (name == null || name.isEmpty()) {
-            throw new IllegalArgumentException("User name cannot be null or empty");
+    public UserDTO getUserByLogin(String login) {
+        if (login == null || login.isEmpty()) {
+            throw new IllegalArgumentException("User login cannot be null or empty");
         }
 
-        val githubUser = githubService.getGithubUserByName(name);
+        val githubUser = githubService.getGithubUserByLogin(login);
 
         processUser(githubUser);
 

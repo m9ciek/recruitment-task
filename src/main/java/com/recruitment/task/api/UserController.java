@@ -16,8 +16,8 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/{name}")
-    private ResponseEntity<UserDTO> getUserByName(@PathVariable String name) {
-        return ResponseEntity.ok(userService.getUserByName(name));
+    @GetMapping("/{login}")
+    private ResponseEntity<UserDTO> getUserByLogin(@PathVariable String login) {
+        return ResponseEntity.ok(userService.getUserByLogin(login));
     }
 }

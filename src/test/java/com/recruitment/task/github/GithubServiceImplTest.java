@@ -4,7 +4,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
 import org.springframework.web.client.RestTemplate;
 
@@ -41,6 +40,6 @@ class GithubServiceImplTest {
         when(environment.getProperty(any())).thenReturn(apiUrl);
         when(restTemplate.getForObject(requestUrl, GithubUser.class)).thenReturn(githubUser);
 
-        assertEquals(githubUser, githubService.getGithubUserByName(githubUser.name()));
+        assertEquals(githubUser, githubService.getGithubUserByLogin(githubUser.name()));
     }
 }

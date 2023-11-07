@@ -42,9 +42,9 @@ class UserServiceImplTest {
     }
 
     @Test
-    public void givenUserName_whenGetUserByName_thenReturnCorrespondingUserDTO() {
-        String validName = "UserName";
-        when(githubService.getGithubUserByName(validName)).thenReturn(githubUser);
+    public void givenUserLogin_whenGetUserByLogin_thenReturnCorrespondingUserDTO() {
+        String validLogin = "UserLogin";
+        when(githubService.getGithubUserByLogin(validLogin)).thenReturn(githubUser);
 
         UserDTO userDTO = new UserDTO();
         userDTO.setId(1L);
@@ -55,45 +55,45 @@ class UserServiceImplTest {
         userDTO.setCreatedAt(LocalDateTime.of(2020, 12, 13, 14, 15));
         userDTO.setCalculations(15);
 
-        assertEquals(userDTO, userService.getUserByName(validName));
+        assertEquals(userDTO, userService.getUserByLogin(validLogin));
     }
 
     @Test
-    public void givenUserName_whenGetUserByName_thenReturnUserDTOWithThatName() {
-        String validName = "UserName";
-        when(githubService.getGithubUserByName(validName)).thenReturn(githubUser);
+    public void givenUserLogin_whenGetUserByLogin_thenReturnUserDTOWithThatLogin() {
+        String validLogin = "UserLogin";
+        when(githubService.getGithubUserByLogin(validLogin)).thenReturn(githubUser);
 
         UserDTO userDTO = new UserDTO();
-        userDTO.setName(validName);
+        userDTO.setLogin(validLogin);
 
-        assertEquals(userDTO.getName(), userService.getUserByName(validName).getName());
+        assertEquals(userDTO.getLogin(), userService.getUserByLogin(validLogin).getLogin());
     }
 
     @Test
-    public void givenAnyGithubUserNameWithFollowers_whenGetUserByName_thenReturnUserWithValidCalculationResult() {
+    public void givenAnyGithubUserLoginWithFollowers_whenGetUserByLogin_thenReturnUserWithValidCalculationResult() {
         double validCalculationResult = 15;
-        when(githubService.getGithubUserByName(any())).thenReturn(githubUser);
+        when(githubService.getGithubUserByLogin(any())).thenReturn(githubUser);
 
-        UserDTO result = userService.getUserByName("Random");
+        UserDTO result = userService.getUserByLogin("Random");
 
         assertEquals(validCalculationResult, result.getCalculations());
     }
 
     @Test
-    public void givenGithubUserWithZeroFollowers_whenGetUserByName_thenReturnUserWithNaNCalculationResult() {
+    public void givenGithubUserWithZeroFollowers_whenGetUserByLogin_thenReturnUserWithNaNCalculationResult() {
         double nanCalculationResult = Double.NaN;
         GithubUser githubUserWithZeroFollowers = githubUser.toBuilder().followersCount(0).build();
 
-        when(githubService.getGithubUserByName(any())).thenReturn(githubUserWithZeroFollowers);
+        when(githubService.getGithubUserByLogin(any())).thenReturn(githubUserWithZeroFollowers);
 
-        UserDTO result = userService.getUserByName("Zeroer");
+        UserDTO result = userService.getUserByLogin("Zeroer");
 
         assertEquals(nanCalculationResult, result.getCalculations());
     }
 
     @ParameterizedTest
     @NullAndEmptySource
-    public void givenNullOrEmptyName_whenGetUserByName_thenThrowException(String invalidName) {
-        assertThrows(IllegalArgumentException.class, () -> userService.getUserByName(invalidName));
+    public void givenNullOrEmptyLogin_whenGetUserByLogin_thenThrowException(String invalidLogin) {
+        assertThrows(IllegalArgumentException.class, () -> userService.getUserByLogin(invalidLogin));
     }
 }

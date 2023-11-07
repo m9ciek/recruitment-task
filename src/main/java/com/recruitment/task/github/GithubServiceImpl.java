@@ -14,9 +14,9 @@ public class GithubServiceImpl implements GithubService {
     private final RestTemplate restTemplate;
 
     @Override
-    public GithubUser getGithubUserByName(String name) {
+    public GithubUser getGithubUserByLogin(String login) {
         val apiUrl = environment.getProperty("github.api-url");
-        val requestUrl = apiUrl + name;
+        val requestUrl = apiUrl + login;
 
         return restTemplate.getForObject(requestUrl, GithubUser.class);
     }
